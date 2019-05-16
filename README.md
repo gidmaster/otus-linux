@@ -8,3 +8,11 @@
 4. Publish `.config` file
 5. Publish list of installed pakages. you can get it from `/var/log/yum.log`
 6. Publish `Vagrantfile`
+## Homework 02
+**Create RAID array**
+1. Add new disk into `Vagrantfile`.
+2. Create RAID0/5/10 array on your choice.
+3. Make `mdadm.conf` file with current configuration. To assamble RAID array during the boot procedure.
+4. Broke/restore RAID array.
+5. Create GTP Table on RAID array and 5 partitions.
+6. Make `build script` and add it into `Vagrantfile`.
