@@ -16,3 +16,11 @@
 4. Broke/restore RAID array.
 5. Create GTP Table on RAID array and 5 partitions.
 6. Make `build script` and add it into `Vagrantfile`.
+## Homework 03
+**Work with LVM**
+1. Reduce volume `/`to 8GB.
+2. Create volume for `/home`
+3. Create volume for `/var`
+4. Make mirror for `/var`
+5. Create volume for `/home` and make snapshot and restor from it.
+
