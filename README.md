@@ -23,4 +23,7 @@
 3. Create volume for `/var`
 4. Make mirror for `/var`
 5. Create volume for `/home` and make snapshot and restor from it.
-
+## Homework 04
+1. Reset `root` password deffirent options.
+2. Rename volume group.
+3. Add module to boot.
