@@ -27,3 +27,10 @@
 1. Reset `root` password deffirent options.
 2. Rename volume group.
 3. Add module to boot.
+## Homework 05
+1. Make script for `cron` which sends to e-mail `k.****@gmail.com` every hour:
+    * X IP adresses (with most number of requests) with number of requests since the last script's run.
+    * Y requested IP addresses (with most number of requests) with number of requests since the last script's run.
+    * All errors since the last script's run.
+    * List of return codes with number of requests since the last script's run.
+E-mail should include time range. Also script should include multirun protection.
