@@ -34,3 +34,8 @@
     * All errors since the last script's run.
     * List of return codes with number of requests since the last script's run.
 E-mail should include time range. Also script should include multirun protection.
+## Homework 06
+1. Write service. Service should monitor into log file and look for `<key word>` every 30 seconds. Log file and word should be in `/etc/sysconfig`.
+2. Install `spawn-fgci` from `epel` and re-write init-file to unit-file. The service name should be the same.
+3. Update apache(httpd) unit-file to run multi-instances with diffirent configurations.
+4. Download demo-version AtlasianJira and re-write main script to unit-file.
