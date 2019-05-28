@@ -39,3 +39,6 @@ E-mail should include time range. Also script should include multirun protection
 2. Install `spawn-fgci` from `epel` and re-write init-file to unit-file. The service name should be the same.
 3. Update apache(httpd) unit-file to run multi-instances with diffirent configurations.
 4. Download demo-version AtlasianJira and re-write main script to unit-file.
+## Homework 07
+1. Restrict login access on weekends to all users except users in `admin` group.
+2. Grant current user root rights.
