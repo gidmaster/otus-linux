@@ -42,3 +42,6 @@ E-mail should include time range. Also script should include multirun protection
 ## Homework 07
 1. Restrict login access on weekends to all users except users in `admin` group.
 2. Grant current user root rights.
+## Homework 08
+1. Create your own RPM package and place it on your own repository.
+2. Create your own Dockerfile, make the image from it and put in on Docker Registry.
