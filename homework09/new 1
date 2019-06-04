@@ -1,0 +1,15 @@
+pid
+tty
+stat
+time
+command
+
+
+в /proc/<цифры> нужно выдернуть:
+pid -> pid
+cmdline -> command
+stat -> stat $3
+tty -> stat &7 но нужно обработать.
+time -> stat tics = (&14 + $15 + $16 +$17) datetime.timedelta(microseconds = ticks/10)
+
+

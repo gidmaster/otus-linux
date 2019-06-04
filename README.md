@@ -45,3 +45,9 @@ E-mail should include time range. Also script should include multirun protection
 ## Homework 08
 1. Create your own RPM package and place it on your own repository.
 2. Create your own Dockerfile, make the image from it and put in on Docker Registry.
+## Homework 09
+1. Write your own `ps ax` script with `/proc` output usage.
+2. Write your own `lsof` script.
+3. Add `SIGNAL` handlers in `myfork.py` script. 
+4. Make two competing processes. And try to use `ionice` to make one of them more prioritized.
+5. Make two competing processes. And try to use `nice` to make one of them more prioritized.
