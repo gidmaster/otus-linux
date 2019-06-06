@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    # config.vm.provision "shell", inline: "echo Hello"
+    config.vm.box = "centos/7"
+
+    config.vm.define "dc" do |dc|
+      dc.vm.hostname = "dc01.lab.loc"
+      dc.vm.network "private_network", ip: "10.0.10.3"
+      dc.vm.network "forwarded_port", guest: 80, host: 8080
+      dc.vm.network "forwarded_port", guest: 443, host: 8443
+      ssh_insecure_key_pub = File.readlines("ssh_insecure_key/key.pub").first.strip
+      dc.vm.provision "shell", inline: <<-SHELL
+      echo #{ssh_insecure_key_pub} >> /home/vagrant/.ssh/authorized_keys
+      SHELL
+
+      dc.vm.provider "virtualbox" do |vb|
+        vb.memory = 2048
+        vb.cpus = "2"
+      end
+    end
+  
+    config.vm.define "hw10" do |hw10|
+      hw10.vm.hostname = "hw10.lab.loc"
+      hw10.vm.network "private_network", ip: "10.0.10.4"
+      ssh_insecure_key_pub = File.readlines("ssh_insecure_key/key.pub").first.strip
+      hw10.vm.provision "shell", inline: <<-SHELL
+      echo #{ssh_insecure_key_pub} >> /home/vagrant/.ssh/authorized_keys
+      SHELL
+    end
+
+    config.vm.define "ans" do |ans|
+      ans.vm.hostname = "ans.lab.loc"
+      ans.vm.network "private_network", ip: "10.0.10.2"
+      ans.vm.provision "shell", inline: <<-SHELL
+      cp /vagrant/ssh_insecure_key/key /home/vagrant/.ssh/id_rsa
+      chown vagrant /home/vagrant/.ssh/id_rsa
+      chmod 400 /home/vagrant/.ssh/id_rsa
+      SHELL
+      ans.vm.provision "shell", path: "provision.sh"
+    end
+end

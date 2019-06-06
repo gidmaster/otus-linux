@@ -1,0 +1,74 @@
+---
+- name: Update etc hosts file with with own IP and name
+  replace:
+    path: "/etc/hosts"
+    regexp: "127.0.0.1\\s+{{ hostvars[inventory_hostname]['ansible_hostname'] }}.{{ ipa_domain }}"
+    replace: "{{ hostvars[inventory_hostname]['ansible_host'] }} {{ hostvars[inventory_hostname]['ansible_hostname'] }}.{{ ipa_domain }}" 
+
+- name: Install FreeIPA and dependencies
+  yum:
+    name:
+      - bind 
+      - bind-utils
+      - bind-dyndb-ldap
+      - ipa-server
+      - ipa-client
+      - ipa-server-dns
+      - ipa-server-trust-ad
+      - samba-client
+      - samba-winbind-clients
+    state: present
+
+- name: Update BIND configuration (listen inteface)
+  replace:
+    path: "/etc/named.conf"
+    regexp: 'listen-on port 53 { 127.0.0.1; };'
+    replace: 'listen-on port 53 { any; };'
+
+- name: Update BIND configuration
+  replace:
+    path: "/etc/named.conf"
+    regexp: 'allow-query { localhost; };'
+    replace: 'allow-query { any; };'
+
+- name: Update BIND configuration (disable IPv6)
+  replace:
+    path: "/etc/named.conf"
+    regexp: 'listen-on-v6 port 53 { ::1; };'
+    replace: '//listen-on-v6 port 53 { ::1; }'
+
+- name: Update BIND configuration (disable dnssec-validation)
+  replace:
+    path: "/etc/named.conf"
+    regexp: 'dnssec-validation yes;'
+    replace: 'dnssec-validation no;'
+
+- name: loop DNS requests on current server
+  template:
+      dest: "/etc/resolv.conf"
+      src: "templates/resolv.conf.j2"
+      force: yes
+
+- name: Start service named, if not started
+  service:
+    name: named
+    state: started
+
+# IMPORTANT NOT INDIMPOTANT ACTION. USE CAREFULY
+- name: install IPA server
+  command: >
+    ipa-server-install -U \
+      -r {{ ipa_realm }} \
+      -n {{ ipa_domain }} \
+      -p password \
+      -a password \
+      --hostname={{ hostvars[inventory_hostname]['ansible_hostname'] }}.{{ ipa_domain }} \
+      --ip-address={{ hostvars[inventory_hostname]['ansible_host'] }} \
+      --setup-dns \
+      --auto-forwarders \
+      --no-reverse
+  args:
+    creates: /etc/ipa/default.conf
+
+...
+      

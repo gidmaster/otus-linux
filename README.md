@@ -51,3 +51,7 @@ E-mail should include time range. Also script should include multirun protection
 3. Add `SIGNAL` handlers in `myfork.py` script. 
 4. Make two competing processes. And try to use `ionice` to make one of them more prioritized.
 5. Make two competing processes. And try to use `nice` to make one of them more prioritized.
+## Homework 10
+1. Install and set up FreeIPA server
+2. Make Ansible playbook for client configuration
+3. Run `lab` with LDAP authentication

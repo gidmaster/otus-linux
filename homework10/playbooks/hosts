@@ -1,0 +1,4 @@
+[dc]
+dc01 ansible_host=10.0.10.3
+[clients]
+client ansible_host=10.0.10.4
