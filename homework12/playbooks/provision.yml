@@ -1,0 +1,33 @@
+---
+- name: Configure web
+  hosts: web
+  become: True
+  tags:
+    [servers, webserver]
+  roles:
+    - role: nginx-install
+      nginx_port: 8008
+
+- name: TSHOOT tools
+  hosts: all
+  become: True
+  tags:
+    [servers, tshoot]
+  roles:
+    - role: tshoot-tools
+
+- name: Tune NGINX configuration for better performance
+  hosts: web
+  become: True
+  tags:
+    [servers, webserver, tune-nginx]
+  roles:
+    - role: nginx-perf
+
+- name: Tune KERNEL configuration for better performance
+  hosts: web
+  become: True
+  tags:
+    [servers, webserver, tune-nginx]
+  roles:
+    - role: kernel-tune

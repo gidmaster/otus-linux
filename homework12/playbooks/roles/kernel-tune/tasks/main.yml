@@ -1,0 +1,19 @@
+---
+- name: copy perfomance tuning configuration files (sysctl.conf)
+  copy:
+    src: 'files/etc/sysctl.conf'
+    dest: '/etc/sysctl.conf'
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload kernel params
+
+- name: copy perfomance tuning configuration files (limits.conf)
+  copy:
+    src: 'files/etc/security/limits.conf'
+    dest: '/etc/security/limits.conf'
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload kernel params
+...

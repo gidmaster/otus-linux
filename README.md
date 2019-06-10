@@ -63,3 +63,8 @@ E-mail should include time range. Also script should include multirun protection
 - Use `notify` to `start/restart` `nginx`
 - `nginx` should listen on 8080 port and use ansible variables for it.
 - Use ansible roles.
+## Homework 12
+1. Make playbook for nginx installation (use previous homework)
+    * Install Troubleshooting tools.
+    * Tune kernel and network setting for better NGINX performance.
+    * Tune NGINX for better NGINX performance.

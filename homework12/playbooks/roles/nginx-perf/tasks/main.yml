@@ -1,0 +1,33 @@
+---
+- name: copy nginx configuration files (base config)
+  copy:
+    src: 'files/etc/nginx/nginx.conf'
+    dest: '/etc/nginx/nginx.conf'
+    owner: root
+    group: root
+    mode: 0644
+
+- name: copy nginx configuration files (gzip config)
+  copy:
+    src: 'files/etc/nginx/conf.d/gzip.conf'
+    dest: '/etc/nginx/conf.d/gzip.conf'
+    owner: root
+    group: root
+    mode: 0644
+
+- name: copy nginx configuration files (performance config)
+  copy:
+    src: 'files/etc/nginx/conf.d/performance.conf'
+    dest: '/etc/nginx/conf.d/performance.conf'
+    owner: root
+    group: root
+    mode: 0644
+
+- name: copy nginx configuration files (timeouts config)
+  copy:
+    src: 'files/etc/nginx/conf.d/timeouts.conf'
+    dest: '/etc/nginx/conf.d/timeouts.conf'
+    owner: root
+    group: root
+    mode: 0644
+...
