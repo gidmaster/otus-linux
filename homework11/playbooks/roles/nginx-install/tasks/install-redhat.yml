@@ -1,0 +1,31 @@
+---
+- name: Install EPEL-RELEASE dependencies (yum)
+  yum:
+    name:
+      - epel-release
+    update_cache: yes
+    state: present
+
+- name: Install NGINX dependencies (yum)
+  yum:
+    name:
+      - nginx
+    update_cache: yes
+    state: present
+
+- name: Create directories for server Blocks (RedHat)
+  file:
+    path: /etc/nginx/sites-enabled
+    state: directory
+
+- name: Create directories for server Blocks (RedHat)
+  file:
+    path: /etc/nginx/sites-available
+    state: directory
+
+- name: Modify nginx conf (RedHat)
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    insertafter: '^http \{'
+    line: "   include /etc/nginx/sites-enabled/*.conf;"
+...

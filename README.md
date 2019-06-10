@@ -55,3 +55,11 @@ E-mail should include time range. Also script should include multirun protection
 1. Install and set up FreeIPA server
 2. Make Ansible playbook for client configuration
 3. Run `lab` with LDAP authentication
+## Homework 11
+1. Run `Vagrant` stage with at least one server. Deploy `nginx` on this server with next conditions:
+- Use `apt/yum`
+- Use `jinja2` templates as configuration files
+- `nginx` should be enabled in systemd
+- Use `notify` to `start/restart` `nginx`
+- `nginx` should listen on 8080 port and use ansible variables for it.
+- Use ansible roles.

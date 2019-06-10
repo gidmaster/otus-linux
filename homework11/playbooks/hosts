@@ -1,0 +1,4 @@
+[web]
+cent ansible_host=10.0.10.4
+ubnt ansible_host=10.0.10.3
+

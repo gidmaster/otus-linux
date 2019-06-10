@@ -1,0 +1,10 @@
+---
+- name: Configure web
+  hosts: web
+  become: True
+  tags:
+    - servers
+  roles:
+    - role: nginx-install
+      nginx_port: 8080
+
