@@ -1,0 +1,35 @@
+---
+- name: Configure web
+  hosts: web
+  become: True
+  tags:
+    [servers, webserver]
+  roles:
+    - role: nginx-install
+      nginx_port: 8008
+
+- name: Configure logs collecting
+  hosts: log
+  become: True
+  tags:
+    [servers, log]
+  roles:
+    - role: log-server
+    - role: audit-server
+
+- name: Configure log responders
+  hosts: web
+  become: True
+  tags:
+    [servers, log-responder]
+  roles:
+    - role: log-responder
+      rlog_server: 10.0.10.4
+    - role: nginx-logs
+      rlog_server: 10.0.10.4
+    - role: audit-directory
+      audit_dir: /etc/nginx
+      audit_key: nginx_conf
+    - role: audit-client
+      remote_server: 10.0.10.4
+    

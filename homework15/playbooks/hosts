@@ -1,0 +1,9 @@
+[all:children]
+web
+log
+
+[web]
+cent ansible_host=10.0.10.3
+
+[log]
+log_server ansible_host=10.0.10.4

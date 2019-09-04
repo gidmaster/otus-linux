@@ -1,0 +1,16 @@
+---
+- name: Install rsyslog
+  yum:
+    name:
+      - rsyslog
+    update_cache: yes
+    state: present
+
+- name: copy rsyslog configuration files
+  copy:
+    src: 'files/rsyslog.conf'
+    dest: '/etc/rsyslog.conf'
+    owner: root
+    group: root
+    mode: 0644
+...

@@ -1,0 +1,32 @@
+---
+- name: OS Family and Packet Manager
+  debug:
+    msg: " OS Family: {{ hostvars[inventory_hostname]['ansible_os_family'] }}. Packet manager: {{ hostvars[inventory_hostname]['ansible_pkg_mgr'] }}."
+
+- name: Install NGINX (RedHat)
+  include_tasks: install-redhat.yml
+  when: hostvars[inventory_hostname]['ansible_os_family'] == "RedHat"
+
+- name: Install NGINX (Ubuntu)
+  include_tasks: install-debian.yml
+  when: hostvars[inventory_hostname]['ansible_os_family'] == "Debian"
+
+- name: Copy nginx configuration file
+  template:
+      src: "templates/nginx.conf.j2" 
+      dest: "/etc/nginx/sites-available/default" 
+      force: yes
+
+- name: enable configuration
+  file:
+      path: "/etc/nginx/sites-enabled/default"
+      src: "/etc/nginx/sites-available/default" 
+      state: link
+
+- name: copy default site page index.html
+  template:
+      src: "templates/index.html.j2" 
+      dest: "/usr/share/nginx/html/index.html" 
+      force: yes
+  notify: restart nginx
+...

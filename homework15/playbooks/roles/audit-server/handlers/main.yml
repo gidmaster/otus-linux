@@ -1,0 +1,6 @@
+---
+- name: restart audit
+  # for some reason auditd is not correctly restarted with "service" module
+  # https://bugzilla.redhat.com/show_bug.cgi?id=973697
+  command: service auditd restart
+...

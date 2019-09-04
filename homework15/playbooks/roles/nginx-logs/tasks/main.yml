@@ -1,0 +1,28 @@
+---
+- name: configure nginx to send all access logs to remote host
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    state: present
+    regexp: 'access_log  /var/log/nginx/access.log  main;'
+    line: '    access_log syslog:server={{ rlog_server }},facility=local7,tag=nginx,severity=info main;'
+    backrefs: yes
+  notify: reload nginx
+
+- name: cofigure nginx to store critical error logs locally
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    state: present
+    regexp: '(error_log /var/log/nginx/error.log);'
+    line: '\1 crit;'
+    backrefs: yes
+  notify: reload nginx
+
+- name: cofigure nginx to send all errors to log server
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    state: present
+    insertafter: '^error_log.*'
+    line: 'error_log syslog:server={{ rlog_server }},facility=local6,tag=nginx_error;'
+  notify: reload nginx
+
+...

@@ -1,0 +1,39 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    config.vm.provision "shell", inline: "echo Hello"
+
+    config.vm.define "web" do |web|
+      web.vm.box = "centos/7"
+      web.vm.hostname = "web.lab.loc"
+      web.vm.network "private_network", ip: "10.0.10.3"
+      ssh_insecure_key_pub = File.readlines("ssh_insecure_key/key.pub").first.strip
+      web.vm.provision "shell", inline: <<-SHELL
+      echo #{ssh_insecure_key_pub} >> /home/vagrant/.ssh/authorized_keys
+      SHELL
+    end
+
+    config.vm.define "log" do |log|
+        log.vm.box = "centos/7"
+        log.vm.hostname = "log.lab.loc"
+        log.vm.network "private_network", ip: "10.0.10.4"
+        ssh_insecure_key_pub = File.readlines("ssh_insecure_key/key.pub").first.strip
+        log.vm.provision "shell", inline: <<-SHELL
+        echo #{ssh_insecure_key_pub} >> /home/vagrant/.ssh/authorized_keys
+        SHELL
+      end
+
+    config.vm.define "ans" do |ans|
+      ans.vm.box = "centos/7"
+      ans.vm.hostname = "ans.lab.loc"
+      ans.vm.network "private_network", ip: "10.0.10.2"
+      ans.vm.provision "shell", inline: <<-SHELL
+      cp /vagrant/ssh_insecure_key/key /home/vagrant/.ssh/id_rsa
+      chown vagrant /home/vagrant/.ssh/id_rsa
+      chmod 400 /home/vagrant/.ssh/id_rsa
+      SHELL
+      ans.vm.provision "shell", path: "provision.sh"
+      ans.vm.synced_folder "playbooks", "/home/vagrant/playbooks", type: "virtualbox"
+    end
+end
